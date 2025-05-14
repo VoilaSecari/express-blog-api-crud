@@ -1,6 +1,8 @@
 // baseline
 const express = require("express");
 const router = express.Router();
+// importo data
+let { posts } = require("../data/posts.js");
 
 // importo controller
 const postController = require("../controllers/postController.js");
@@ -13,42 +15,23 @@ router.get("", postController.index);
 
 // SHOW (QUI PER LO SPECIFICO POST)
 // .get
-router.get("/:id", (req, res) => {
-  //creo costanti per navigare
-  const id = parseInt(req.params.id);
-  const post = posts.find((currentPost) => currentPost.id === id);
-  res.json({
-    description: "Lettura sul blog del post " + id,
-    data: post,
-  });
-});
+router.get("/:id", postController.show);
 
 // STORE (qui si crea nuovo post)
 // .post
-router.post("", (req, res) => {
-  res.json("Creazione sul blog di un nuovo post.");
-});
+router.post("", postController.store);
 
 // UPDATE (qui si sostituisce un post del blog)
 // .put
-router.put("/:id", (req, res) => {
-  const id = req.params.id;
-  res.json("Sostituzione sul blog del post " + id);
-});
+router.put("/:id", postController.update);
 
 // MODIFY (qui si modifica un post del blog)
 // .patch
-router.patch("/:id", (req, res) => {
-  const id = req.params.id;
-  res.json("Modifica sul blog del post " + id);
-});
+router.patch("/:id", postController.modify);
 
 // DESTROY (con questo si elimina un post)
 // .delete
-router.delete("/:id", (req, res) => {
-  const id = req.params.id;
-  res.json("Eliminazione sul blog del post " + id);
-});
+router.delete("/:id", postController.destroy);
 
 // export router
 
