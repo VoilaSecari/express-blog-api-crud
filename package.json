@@ -1,0 +1,22 @@
+{
+  "name": "express-blog-intro",
+  "version": "1.0.0",
+  "description": "Questo sarà il progetto del blog personale, da arricchire pian piano in Boolean",
+  "main": "app.js",
+  "scripts": {
+    "start": "node app.js",
+    "dev": "node --watch app.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "blog",
+    "boolean",
+    "post",
+    "personale"
+  ],
+  "author": "Laura Filip",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^5.1.0"
+  }
+}
