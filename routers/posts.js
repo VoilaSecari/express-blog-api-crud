@@ -2,16 +2,14 @@
 const express = require("express");
 const router = express.Router();
 
-//importo data
-let { posts } = require("../data/posts.js");
+// importo controller
+const postController = require("../controllers/postController.js");
 
 // definizione delle rotte
 
 // INDEX (base, indice insomma)
 // .get
-router.get("", (req, res) => {
-  res.json({ posts });
-});
+router.get("", postController.index);
 
 // SHOW (QUI PER LO SPECIFICO POST)
 // .get
