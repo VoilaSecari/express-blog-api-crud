@@ -2,7 +2,7 @@
 const express = require("express");
 const router = express.Router();
 // importo data
-let { posts } = require("../data/posts.js");
+// let { posts } = require("../data/posts.js");
 
 // importo controller
 const postController = require("../controllers/postController.js");

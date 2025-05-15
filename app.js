@@ -10,7 +10,7 @@ app.use(express.static("public"));
 app.use(express.json());
 
 // importo data
-let { posts } = require("./data/posts.js");
+// let { posts } = require("./data/posts.js");
 
 //importo router
 const blogRouter = require("./routers/posts.js");
