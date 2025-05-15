@@ -39,12 +39,34 @@ const store = (req, res) => {
 };
 
 const update = (req, res) => {
-  const id = req.params.id;
-  res.json("Sostituzione sul blog del post " + id);
+  const postId = parseInt(req.params.id);
+  const originalPost = posts.find((post) => post.id === postId);
+
+  if (!originalPost) {
+    res.status(404);
+
+    res.json({
+      error: "404 Not Found",
+      message: "Post non trovato",
+    });
+  }
+  const { title, content, image, tags } = req.body;
+
+  const updatedPost = { id: postId, title, content, image, tags };
+
+  const originalPostIndex = posts.indexOf(originalPost);
+
+  posts.splice(originalPostIndex, 1, updatedPost);
+
+  res.status(200);
+  res.json({
+    message: "Post con id " + postId + " correttamente sostituito.",
+    data: updatedPost,
+  });
 };
 
 const modify = (req, res) => {
-  const id = req.params.id;
+  const postId = parseInt(req.params.id);
   res.json("Modifica sul blog del post " + id);
 };
 
