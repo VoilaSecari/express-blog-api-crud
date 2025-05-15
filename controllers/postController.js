@@ -1,5 +1,5 @@
 // importo data
-let { posts } = require("../data/posts.js");
+let posts = require("../data/posts.js").posts;
 
 // index
 const index = (req, res) => {
@@ -17,7 +17,25 @@ const show = (req, res) => {
 };
 
 const store = (req, res) => {
-  res.json("Creazione sul blog di un nuovo post.");
+  const { title, content, image, tags } = req.body;
+
+  //id generator
+  let maxId = 0;
+  for (const post of posts) {
+    if (post.id > maxId) maxId = post.id;
+  }
+
+  const postId = maxId + 1;
+  //ora il nuovo post con tutti i dati destrutturati
+  const newPost = { id: postId, title, content, image, tags };
+
+  posts.push(newPost);
+
+  console.log(newPost);
+  return res.json({
+    message: "Creazione sul blog di un nuovo post.",
+    data: newPost,
+  });
 };
 
 const update = (req, res) => {
