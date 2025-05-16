@@ -10,9 +10,19 @@ const show = (req, res) => {
   //creo costanti per navigare
   const id = parseInt(req.params.id);
   const post = posts.find((currentPost) => currentPost.id === id);
+
+  // not found
+  if (!post) {
+    const error = new Error();
+    error.statusCode = 404;
+    error.message = "Post non trovato";
+    throw error;
+  }
+
   res.json({
     description: "Lettura sul blog del post " + id,
     data: post,
+    status: 200,
   });
 };
 
@@ -35,6 +45,7 @@ const store = (req, res) => {
   return res.json({
     message: "Creazione sul blog di un nuovo post.",
     data: newPost,
+    status: 200,
   });
 };
 
@@ -42,13 +53,12 @@ const update = (req, res) => {
   const postId = parseInt(req.params.id);
   const originalPost = posts.find((post) => post.id === postId);
 
+  // not found
   if (!originalPost) {
-    res.status(404);
-
-    res.json({
-      error: "404 Not Found",
-      message: "Post non trovato",
-    });
+    const error = new Error();
+    error.statusCode = 404;
+    error.message = "Post non trovato";
+    throw error;
   }
   const { title, content, image, tags } = req.body;
 
@@ -58,10 +68,10 @@ const update = (req, res) => {
 
   posts.splice(originalPostIndex, 1, updatedPost);
 
-  res.status(200);
   res.json({
     message: "Post con id " + postId + " correttamente sostituito.",
     data: updatedPost,
+    status: 200,
   });
 };
 
@@ -71,8 +81,26 @@ const modify = (req, res) => {
 };
 
 const destroy = (req, res) => {
-  const id = req.params.id;
-  res.json("Eliminazione sul blog del post " + id);
+  const postId = parseInt(req.params.id);
+  const originalPost = posts.find((post) => post.id === postId);
+
+  // not found
+  if (!originalPost) {
+    const error = new Error();
+    error.statusCode = 404;
+    error.message = "Post non trovato";
+    throw error;
+  }
+
+  const originalPostIndex = posts.indexOf(originalPost);
+
+  posts.splice(originalPostIndex, 1);
+
+  res.json({
+    message: "Post con id " + postId + " eliminato correttamente .",
+    data: updatedPost,
+    status: 200,
+  });
 };
 
 module.exports = { index, show, store, update, modify, destroy };
